@@ -1,0 +1,45 @@
+class Solution(object):
+  def isNumber(self, s):
+      """
+      :type s: str
+      :rtype: bool
+      """
+      #define a DFA
+      states = [{},
+                # state (1) - initial state (scan ahead thru blanks)
+                {'blank': 1, 'sign': 2, 'digit': 3, '.': 4},
+                # state (2) - found sign (expect digit or dot)
+                {'digit': 3, '.': 4},
+                # state (3) - digit consumer
+                {'digit': 3, '.': 5, 'e': 6, 'blank': 9},
+                # state (4) - found dot (only a digit is valid)
+                {'digit': 5},
+                # state (5) - after dot (expect digits, e, or end of a valid)
+                {'digit': 5, 'e': 6, 'blank': 9},
+                # state (6) - found e (a sign or a digit is valid)
+                {'sign': 7, 'digit': 8},
+                # state (7) - sign after e (expect digit or end of valid input)
+                {'digit': 8, 'blank': 9},
+                # state (8) - digit after e (expect digit or end of a blank)
+                {'digit': 8, 'blank': 9},
+                # state (9) - terminal state (fail if non-blank found)
+                {'blank': 9}]
+       currentState = 1
+       for c in s:
+           # if char c is of a known class set it into the class name
+           if c in '0123456789':
+                c = 'digit'
+           elif c in '+-':
+                c = 'sign'
+           elif c in ' /n/t':
+                c = 'blank'
+           # if char/class is not in out state transition table it is invalid
+           if c not in states[currentState]:
+                return False
+           # state transition
+           currentState = states[currentState][c]
+        # The only valid terminal states are end on digit, after dot, digit after e, or white space after 
+        if currentState not in [3, 5, 8, 9]:
+            return False
+        return True
+           
