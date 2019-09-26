@@ -1,0 +1,14 @@
+class Solution(object):
+    def canPermutePalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        sc = collections.Counter(s)
+        chance = 1
+        for char in sc:
+            if sc[char]%2 != 0:
+                chance -= 1
+                if chance < 0:
+                return False
+         return True
