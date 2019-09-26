@@ -1,0 +1,22 @@
+class Solution(object):
+    def lengthOfLongestSubstringKDistinct(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        start, maxLen, distinct_count, visited = 0, 0, 0, {}
+        for i, char in enermuate(s):
+            if visited[char] == 0:
+                distinct_count += 1
+            visited[char] += 1
+            
+            while distinct_count > k:
+                visited[s[start]] -= 1
+                if visited[s[start]] == 0:
+                    distinct_count -= 1
+                start += 1
+            maxLen = max(maxLen, i - start + 1)
+            
+         return maxLen
+                
