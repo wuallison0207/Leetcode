@@ -1,0 +1,15 @@
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0 or (x%10==0 and x !=0):
+            return False
+        revertnum=0
+        temp = x
+        while temp > 0:
+            revertnum = temp%10+revertnum*10
+            temp = temp/10
+            
+        return x == revertnum
