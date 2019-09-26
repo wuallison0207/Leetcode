@@ -1,0 +1,43 @@
+class Solution(object):
+    def findSubstring(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: List[int]
+        """
+        if len(words) == 0:
+            return []
+        
+        wordnum = len(words)
+        wl = len(words[0])
+        d = collections.Counter(words)
+        
+        
+        ret = []
+        for k in range(wl):
+            left = k
+            count = 0
+            subd = {}
+            for j in range(k, len(s)-wl+1, wl):
+                tword = s[j:j+wl]
+                if tword in d:
+                    if tword in subd:
+                        subd[tword] += 1
+                    else:
+                        subd[tword] = 1
+                    count += 1
+                
+                
+                    while subd[tword] > d[tword]:
+                        count -= 1
+                        subd[s[left:left+wl]] -= 1
+                        left += wl
+                        
+                    if count == len(words):
+                        ret.append(left)
+                else:
+                    left = j + wl
+                    count = 0
+                    subd = {}
+            
+        return ret
