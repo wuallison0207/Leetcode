@@ -1,0 +1,26 @@
+class Solution(object):
+    def palindromePairs(self, words):
+        """
+        :type words: List[str]
+        :rtype: List[List[int]]
+        """
+        def is_Palindrome(check):
+            return check == check[::-1]
+        
+        words = {word: i for i, word in enumerate(words)}
+        res = []
+        for word, k in words.iteritems():
+            n = len(word)
+            for i in range(n+1):
+                pre = word[:i]
+                surf = word[i:]
+                if is_Palindrome(pre):
+                    back = surf[::-1]
+                    if back in words and back != word:
+                        res.append([words[back], k])  
+                    
+                if i != n and is_Palindrome(surf):
+                    back = pre[::-1]
+                    if back!=word and back in words:
+                        res.append([k, words[back]])
+        return res
