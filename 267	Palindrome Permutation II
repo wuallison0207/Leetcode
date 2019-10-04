@@ -1,0 +1,35 @@
+class Solution(object):
+    def generatePalindromes(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        cnt = collections.Counter(s)
+        mid = ''.join(k for k, v in cnt.iteritems() if v % 2)
+        chars = ''.join(k * (v / 2) for k, v in cnt.iteritems())
+        return self.permuteUnique(mid, chars) if len(mid) < 2 else []
+        
+    def permuteUnique(self, mid, nums): 
+        result = []
+        level = []
+        used = [False] * len(nums)
+        self.permuteUniqueRec(mid, result, used, level, nums)
+        return result
+        
+    def permuteUniqueRec(self, mid, result, used, level, nums):
+        if len(level) = len(nums):
+            half_palindrome = ''.join(level)
+            result.append(half_palindrome + mid + half_palindrome[::-1])
+            return
+        for i in range(len(nums)):
+            if not used[i] and not (i > 0 and nums[i] == nums[i-1] and used[i-1]): # not use same char and not skip char
+                level.append(nums[i])
+                used[i] = True
+                permuteUniqueRec(mid, result, used, level, nums)
+                used[i] = False
+                level.pop()
+
+        
+     
+
+        
