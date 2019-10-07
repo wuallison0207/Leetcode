@@ -1,0 +1,30 @@
+class Solution(object):
+    def removeInvalidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: List[str]
+        """
+        ans = []
+        
+        self.remove(s, ans, 0, 0, ['(', ')'])
+        return ans
+    
+    def remove(self, s, ans, istart, lastj, par):
+        stack = 0
+        for i in range(istart, len(s)):
+            if s[i] == par[0]: stack += 1
+            if s[i] == par[1]: stack -= 1
+          
+            if stack >= 0: 
+                continue
+            for j in range(lastj, i+1):
+                if s[j] == par[1] and (lastj == j or s[j-1] != par[1]):
+                        
+                    self.remove(s[:j]+s[j+1:], ans, i, j, par)
+            return
+        
+        reverse = s[::-1]
+        if par[0] == '(':
+            self.remove(reverse, ans, 0, 0, [')', '('])
+        else:
+            ans.append(reverse)
