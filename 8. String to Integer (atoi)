@@ -1,0 +1,29 @@
+class Solution(object):
+    def myAtoi(self, str):
+        """
+        :type str: str
+        :rtype: int
+        """
+        if not str: return 0
+        
+        l=[]
+    
+        sign = 1
+        start = 0
+        while start < len(str) and str[start] == " ": start += 1
+        
+        if start < len(str) and str[start] == "-":
+            sign = -1
+            start += 1
+        elif start < len(str) and str[start] == "+":
+            start += 1
+        
+        if start < len(str) and str[start].isdigit():
+                while start < len(str) and str[start].isdigit():
+                    l.append(str[start])
+                    start += 1
+                l = sign*int("".join(l))
+                if l >= 2**31: return 2**31-1
+                elif l < -2**31+1: return -2**31
+                else: return l
+        return 0
