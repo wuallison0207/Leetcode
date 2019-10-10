@@ -1,0 +1,16 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        compensate = collections.defaultdict(int)
+        res = []
+        for i in range(len(nums)):
+            if nums[i] in compensate:
+                return [compensate[nums[i]], i]
+             
+            else:
+                compensate[target - nums[i]] = i
+        return []
