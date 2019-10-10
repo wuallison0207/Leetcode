@@ -1,0 +1,21 @@
+class Solution(object):
+    def countPrimes(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n<2:
+            return 0
+        primes = [1]*n
+        primes[0], primes[1] = 0, 0
+        for i in range(2, n):
+            if primes[i] == 0:
+                continue
+            p = i
+            cnt = 2
+            while p*cnt < n:
+                
+                primes[p*cnt] = 0
+                cnt += 1
+        res = [v for v in primes if v== 1]
+        return len(res)
