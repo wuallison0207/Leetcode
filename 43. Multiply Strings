@@ -1,0 +1,25 @@
+class Solution(object):
+    def multiply(self, num1, num2):
+        """
+        :type num1: str
+        :type num2: str
+        :rtype: str
+        """
+        
+        res = [0]*(len(num1)+len(num2))
+        
+        for i in reversed(range(len(num1))):
+            for j in reversed(range(len(num2))):
+                res[i+j+1] += (ord(num1[i])-ord('0'))*(ord(num2[j])-ord('0'))
+                res[i+j] += res[i+j+1]/10
+                res[i+j+1] %=10
+                
+        i = 0
+        while i<len(res) and res[i]==0: 
+            i+=1
+        res = "".join(map(str,res[i:]))
+        if res:
+            return res 
+        else:
+            return '0'
+        
