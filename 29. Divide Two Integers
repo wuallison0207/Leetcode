@@ -1,0 +1,40 @@
+class Solution(object):
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+       
+        if divisor == dividend:
+            return 1
+        if divisor == -2147483648:
+                return 0
+        elif divisor == 1:
+            return dividend
+        elif divisor == -1 and dividend != -2147483648:
+                return -dividend
+ 
+        if dividend == -2147483648:
+            if divisor == -1: 
+                return 2147483647
+            
+            else:
+                if divisor%2 ==0:
+                    return self.divide(dividend>>1, divisor>>1)
+                else:
+                    return self.divide(dividend+1, divisor)
+        sign = 1       
+        if (dividend>>31)^(divisor>>31):
+            sign = -1
+        a, b, res = abs(dividend), abs(divisor), 0
+        
+        while a >= b:
+            temp = b
+            cnt = 1
+            while (temp<<1) <= a:
+                temp <<= 1
+                cnt <<= 1
+            a -= temp
+            res += cnt
+        return sign*res
