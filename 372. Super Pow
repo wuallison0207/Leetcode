@@ -1,0 +1,19 @@
+class Solution(object):
+    def superPow(self, a, b):
+        """
+        :type a: int
+        :type b: List[int]
+        :rtype: int
+        """
+        
+        if not b: return 1
+        last_digit = b.pop()
+        return self.myPow(self.superPow(a, b), 10) * self.myPow(a, last_digit) % 1337
+            
+    
+    def myPow(self, a, k):# a^k mod 1337
+        a %= 1337
+        result = 1
+        for i in range(k):
+            result = (result*a) % 1337
+        return result
