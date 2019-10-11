@@ -1,0 +1,23 @@
+class Solution(object):
+    def threeSumSamller(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        cnt = 0
+        nums.sort()
+        for i in range(len(nums)-2):
+            
+            l, r = i+1, len(nums)-1
+            while l < r:
+                total = nums[i]+nums[l]+nums[r]
+                
+                
+                if total >= target:
+                    r -= 1
+                else:
+                    cnt += r-l
+                    l += 1
+                  
+        return cnt
