@@ -1,0 +1,26 @@
+class Solution(object):
+    def countDigitOne(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        lowN = 0
+        highN = 0
+        cdigit = 0
+        factor = 1
+        res = 0
+        while n/factor > 0:
+            cdigit = n%(factor*10)/factor
+            highN = n/(factor*10)
+            
+            
+            if cdigit == 0:
+                res += highN*factor
+                
+            elif cdigit == 1:
+                res += highN*factor + (lowN + 1)
+            else:
+                res += (highN + 1)* factor
+            lowN += cdigit*factor
+            factor *= 10
+        return res
