@@ -1,0 +1,21 @@
+class Solution(object):
+    def isHappy(self, n):
+        """
+        :type n: int
+        :rtype: bool
+        """
+        slow, fast = n, n
+        while True:
+            slow = self.findPower(slow)
+            fast = self.findPower(fast)
+            fast = self.findPower(fast)
+            if slow == fast: break
+        return slow == 1
+        
+    def findPower(self, num):
+        res = 0
+        while num:
+            temp = num%10
+            res += temp*temp
+            num /= 10
+        return res
