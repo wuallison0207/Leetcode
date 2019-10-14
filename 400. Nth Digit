@@ -1,0 +1,17 @@
+class Solution(object):
+    def findNthDigit(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        start, step, ndigits = 1, 9, 1
+        while n > step * ndigits:
+            n -= step * ndigits
+            step *= 10
+            ndigits += 1
+            start *= 10
+            
+        number = (n - 1)/ndigits + start
+        index = (n-1)%ndigits
+        return int(str(number)[index])
+      
