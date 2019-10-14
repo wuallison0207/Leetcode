@@ -1,0 +1,17 @@
+class Solution(object):
+    def maxRotateFunction(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        n = len(A)
+        F = 0
+        total = 0
+        for i in range(len(A)):
+            F += i*A[i]
+            total += A[i]
+        maxF = F   
+        for j in range(n-1, 0, -1):
+            F = F + total - n*A[j]
+            maxF =  max(F, maxF)
+        return maxF
