@@ -1,0 +1,41 @@
+res = [0]*len(nums)
+pt1, pt2 = 0, len(nums)-1
+
+if a > 0:
+    ind = len(nums)-1
+    while pt1 <= pt2:
+        cal1 = self.cal(nums[pt1])
+        cal2 = self.cal(nums[pt2])
+        if cal1 > cal2:
+            res[ind] = cal1
+            pt1 += 1
+        else:
+            res[ind] = cal2
+            pt2 -= 1
+        ind -= 1
+ elif a < 0:
+    ind = 0
+    while pt1 < pt2:
+        cal1 = self.cal(nums[pt1])
+        cal2 = self.cal(nums[pt2])
+        if cal1 < cal2:
+            res[ind] = cal1
+            pt1 += 1
+        else:
+            res[ind] = cal2
+            pt2 -= 1
+        ind += 1
+ else:
+    if b > 0:
+        for i in range(len(nums)):
+            res.append(self.cal(nums[i]))
+    else:
+        for i in range(len(nums)-1, -1, -1):
+            res.append(self.cal(nums[i]))
+ return res
+
+def cal(n):
+    return a*n*n+b*n+c
+            
+
+            
