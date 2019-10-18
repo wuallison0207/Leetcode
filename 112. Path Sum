@@ -1,0 +1,66 @@
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        if not root:
+            return False
+
+        stack = [(root, root.val)]
+        while stack:
+            node, total = stack.pop()
+            if not node.left and not node.right:
+                if total == sum:
+                    return True
+                continue
+            if node.right:
+                
+                stack.append((node.right, total+node.right.val))
+            if node.left:
+                
+                stack.append((node.left, total+node.left.val))
+            
+        return False
+ ########Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def hasPathSum(self, root, sum):
+        """
+        :type root: TreeNode
+        :type sum: int
+        :rtype: bool
+        """
+        if not root:
+            return False
+        res = []
+        self.helper(root, root.val, sum, res)
+        return any(res)
+    
+    def helper(self, node, total, sum, res):   
+        
+        if node:
+            if not node.left and not node.right:
+                if total == sum:
+                    return res.append(True)
+            
+        
+            if node.left:
+                self.helper(node.left, total+node.left.val, sum, res)
+            if node.right:
+                self.helper(node.right, total+node.right.val, sum, res) 
