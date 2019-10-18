@@ -1,0 +1,102 @@
+Solution I
+###############Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        path, ans, level = [], [], 1
+        self.helper(path, ans, root, level)
+        return ans
+        
+    def helper(self, path, ans, node, level):
+        
+        if not node:
+            return
+        path.append(node.val)
+        if not node.left and not node.right:
+            
+            ans.append("->".join(map(str,path)))
+            
+            
+        else:
+            path = path[:level]
+            self.helper(path, ans, node.left, level+1)
+            path = path[:level]
+            self.helper(path, ans, node.right, level+1)
+Rewritten
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        path, ans = "", []
+        self.helper(path, ans, root)
+        return ans
+        
+    def helper(self, path, ans, node):
+        
+        if not node:
+            return
+        
+        if not node.left and not node.right:
+            
+            ans.append(path+str(node.val))
+            return
+            
+        if node.left:
+            
+            self.helper(path+str(node.val)+"->", ans, node.left)
+        
+        if node.right:
+            
+            self.helper(path+str(node.val)+"->", ans, node.right)
+        return
+        
+Solution II
+###############Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def binaryTreePaths(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[str]
+        """
+        if not root:
+            return []
+        stack = [(root, "")]
+        ans = []
+        while stack:
+            node, ls = stack.pop()
+            if not node:
+                return
+            if not node.left and not node.right:
+                
+                ans.append(ls+str(node.val))
+            if node.right:
+                stack.append((node.right, ls+str(node.val)+"->"))
+            if node.left:
+                stack.append((node.left, ls+str(node.val)+"->"))
+        return ans
