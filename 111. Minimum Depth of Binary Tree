@@ -1,0 +1,92 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root: return 0
+        minLen = float('Inf')
+        
+        return self.helper(root, 0, minLen)
+    
+    def helper(self, node, cnt, minLen):
+        
+        if not node:
+            return minLen
+        else:
+            if not node.left and not node.right:
+                return min(cnt+1, minLen)
+                
+            return min(self.helper(node.left, cnt+1, minLen), self.helper(node.right, cnt+1, minLen))
+###Rewritten
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        if not root: return 0
+        minLen = [float("Inf")]
+        self.helper(root, 0, minLen)
+        return minLen[0]
+    
+    def helper(self, node, cnt, minLen):
+        
+        
+        if node:
+            if not node.left and not node.right:
+                minLen[0] = min(minLen[0],cnt+1)
+                
+            self.helper(node.left, cnt+1, minLen)
+            
+            self.helper(node.right, cnt+1, minLen)
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def minDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        if not root: return 0
+        minLen = float('Inf')
+        stack = [(root, 0)]
+        
+        
+    
+    
+        while stack:
+            node, cnt = stack.pop()
+            if node:
+                if not node.left and not node.right:
+                    minLen = min(minLen,cnt+1)
+                    continue
+                if node.right:
+                    stack.append((node.right, cnt+1))
+                if node.left:
+                    stack.append((node.left, cnt+1))
+        return minLen
