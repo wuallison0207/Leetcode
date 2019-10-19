@@ -1,0 +1,63 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class longestConsecutive(object):
+    def sumNumbers(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        if not root:
+          return 0
+        
+        maxLen = 0
+        self.helper(root, [], 0, maxLen)
+        return maxLen
+        
+    def helper(self, node, target, cnt, maxLen):
+        if not node:
+          return 
+        if node.val == target:
+            cnt += 1
+            
+        else:
+            cnt = 1
+        
+        maxLen = max(maxLen, cnt)
+        self.helper(node.left, node.val+1, cnt, maxLen)
+        self.helper(node.right, node.val+1, cnt, maxLen)
+ ###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class longestConsecutive(object):
+    def sumNumbers(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        maxLen = 0
+        
+        stack = [(root, 1, 0)]
+        while stack:
+            node, cnt, target = stack.pop()
+            if not node:
+                continue
+            if node.val == target:
+                cnt += 1
+            else:
+                cnt = 1
+            maxLen = max(maxLen, cnt)
+            stack.append((node.right, cnt, node.val+1))
+            stack.append((node.left, cnt, node.val+1))
+         return maxLen
+        
