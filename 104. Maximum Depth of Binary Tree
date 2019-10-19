@@ -1,0 +1,51 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        
+        return self.helper(root, 0, 0)
+    
+    def helper(self, node, cnt, maxLen):
+        if not node:
+            return maxLen
+        else:
+            if not node.right and not node.left:
+                return max(maxLen, cnt+1)
+            return max(self.helper(node.left, cnt+1, maxLen), self.helper(node.right, cnt+1, maxLen))
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def maxDepth(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        maxLen = 0
+        if not root:
+            return maxLen
+        stack = [(root, 0)]
+        while stack:
+            node, cnt = stack.pop()
+            if not node.right and not node.left:
+                maxLen = max(maxLen, cnt+1)
+            if node.right:
+                stack.append((node.right, cnt+1))
+            if node.left:
+                stack.append((node.left, cnt+1))
+        return maxLen
