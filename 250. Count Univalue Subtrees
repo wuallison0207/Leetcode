@@ -1,0 +1,27 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def countUnivalSubtrees(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        self.res = 0
+        self.isUnival(root, -1, res)
+        return self.res
+        
+    def isUnival(self, node, val, res):
+        if not node:
+            return True
+       
+        if !self.isUnival(node.left, node.val, res) | !self.isUnival(node.right, node.val, res):
+            return False
+        
+        self.res += 1
+        return node.val == val
