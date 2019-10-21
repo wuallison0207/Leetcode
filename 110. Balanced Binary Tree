@@ -1,0 +1,60 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        depth, _isBalance =  self.helper(root)
+        return _isBalance
+        
+    def helper(self, node):
+        if not node:
+            return (0, True)
+        if not node.right and not node.left:
+            return (1, True)
+        left, l_isBalance = self.helper(node.left)
+        right, r_isBalance = self.helper(node.right)
+        if l_isBalance and r_isBalance and abs(left-right)<2:
+            return (max(left, right)+1, True)
+        else:
+            return (max(left, right)+1, False)
+            
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isBalanced(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        stack, depth, last, node = [], {}, None, root
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack[-1]
+                if not node.right or last == node.right:
+                    node = stack.pop()
+                    l_depth, r_depth = depth.get(node.left, 0), depth.get(node.right, 0)
+                    if abs(l_depth-r_depth) > 1: return False
+                    depth[node] = max(l_depth, r_depth)+1
+                    last = node
+                    node = None
+                else:
+                    node = node.right
+        return True
