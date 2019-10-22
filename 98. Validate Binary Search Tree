@@ -1,0 +1,24 @@
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if not root:
+            return True
+        return self.helper(root, float('inf'), float('-inf'))
+        
+    def helper(self, node, less, more):
+        if not node:
+            return True
+        if node.val >= less or node.val <= more:
+            return False
+        return self.helper(node.left, node.val, more) & self.helper(node.right, less, node.val)
