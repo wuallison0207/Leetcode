@@ -1,0 +1,53 @@
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def closestValue(self, root, target):
+        """
+        :type root: TreeNode
+        :type target: target
+        :rtype: double
+        """
+        node = root
+        minDis = root.val
+        while node:
+            if abs(node.val - target) <= abs(minDis - target):
+                minDis = node.val
+            if node.val > target:
+                node = node.left
+            else:
+                node = node.right
+         return minDi
+
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def closestValue(self, root, target):
+        """
+        :type root: TreeNode
+        :type target: target
+        :rtype: double
+        """
+         minDis = root.val
+         return self.helper(root, target, minDis)
+     
+     def helper(self, node, target, minDis):
+         if abs(node.val - target) < abs(minDis - target):
+              minDis = node.val
+         if target < node.val and node.left:
+              minDis = self.helper(node.left, target, minDis)
+         elif target > node.val and node.right:
+              minDis = self.helper(node.right, target, minDis)
+         return minDis
+        
