@@ -1,0 +1,69 @@
+###Iterative
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def closestKValues(self, root, target, k):
+        """
+        :type root: TreeNode
+        :type target: double
+        :type k: int
+        :rtype: double
+        """
+        res = []
+        stack = []
+        while root or stack:
+           while root:
+              stack.append(root)
+              root = root.left
+              
+           root = stack.pop()
+           if len(res)<k:
+               res.append(root.val)
+           elif abs(res[0] - target) > abs(root.val - target):
+               del res[0]
+               res.append(root.val)
+           else: break
+           root = root.right
+           
+        return res
+        
+###Recursive
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def closestKValues(self, root, target, k):
+        """
+        :type root: TreeNode
+        :type target: double
+        :type k: int
+        :rtype: double
+        """       
+              
+        res = []
+        self._inorder(root, target, k, res)
+        return res
+        
+     def _inorder(self, node, target, k, res):
+         if not node:
+            return 
+         self._inorder(node.left, target, k, res)
+         if len(res) < k: 
+            res.append(node.val)
+            
+         elif abs(target - node.val) < abs(res[0] - target):
+            del res[0]
+            res.append(node.val)
+         else:
+            return
+         self._inorder(node.right, target, k, res)
+            
