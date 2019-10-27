@@ -1,0 +1,31 @@
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, left, right, next):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+class verticalOrder(object):
+    def connect(self, root):
+        """
+        :type root: Node
+        :rtype: list[int]
+        """
+        if not root:
+            return []
+        stack = [(0, root)]
+        map = {}
+        res = []
+        while stack:
+            a = stack.pop()
+            m[a[0]] = a[1]
+            if a[1].left:
+                stack.append((a[0]-1, a[1]))
+            if a[1].right:
+                stack.append((a[0]+1, a[1]))
+         for i in len(map):
+             res.append(map[i])
+         return res
+        
+
