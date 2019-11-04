@@ -1,0 +1,20 @@
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        candidates.sort()
+        self.helper(res, candidates, [], target, 0)
+        return res
+    
+    def helper(self, res, candidates, path, target, start):
+        if sum(path) > target:
+            return
+        elif sum(path) == target:
+            res.append(path)
+        for i in range(start, len(candidates)):
+            
+            self.helper(res, candidates, path+[candidates[i]], target, i)
