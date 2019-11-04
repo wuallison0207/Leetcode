@@ -1,0 +1,17 @@
+class Solution(object):
+    def subsets(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        #nums.sort()
+        self.helper(nums, res, [], 0)
+        return res
+        
+    def helper(self, nums, res, tempList, start):
+        res.append(tempList)
+        
+        for i in range(start, len(nums)):
+            
+            self.helper(nums, res, tempList+[nums[i]], i+1)
