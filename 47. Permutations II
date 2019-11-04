@@ -1,0 +1,24 @@
+class Solution(object):
+    def permuteUnique(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        nums.sort()
+        inuse = [False]*len(nums)
+        self.helper(nums, res, inuse, [])
+        return res
+    
+    def helper(self, nums, res, inuse, path):
+        if len(path) == len(nums):
+            res.append(path)
+        else:
+            for i in range(len(nums)):
+                
+                if inuse[i] or (i>0 and nums[i]==nums[i-1] and not inuse[i-1]):
+                    continue
+                
+                inuse[i] = True
+                self.helper(nums, res, inuse, path+[nums[i]])
+                inuse[i] = False
