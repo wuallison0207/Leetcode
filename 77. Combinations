@@ -1,0 +1,20 @@
+class Solution(object):
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        res = []
+        self.helper(res, n, k, [], 1)
+        return res
+    
+    def helper(self, res, n, k, path, start):
+        if len(path) > k:
+            return
+        if len(path) == k:
+            res.append(path)
+            return
+        for i in range(start, n+1):
+            self.helper(res, n, k, path+[i], i+1)
+            
