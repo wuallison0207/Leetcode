@@ -1,0 +1,17 @@
+class Solution(object):
+    def subsetsWithDup(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        nums.sort()
+        self.helper(res, nums, [], 0)
+        return res
+    
+    def helper(self, res, nums, path, start):
+        res.append(path)
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i-1]:continue
+            
+            self.helper(res, nums, path+[nums[i]], i+1)
