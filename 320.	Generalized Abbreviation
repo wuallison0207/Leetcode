@@ -1,0 +1,23 @@
+class Solution(object):
+    def generateAbbreviations(self, word):
+        """
+        :type digits: string
+        :rtype: List[str]
+        """
+        res= [] 
+        self.helper(word, res, "", 0, 0)
+        return res
+     
+    def helper(self, word, res, path, count, pos):
+        #base case
+        if pos == len(word):
+            if count > 0: path += count
+            return res.append(path)
+        # abbreviate the letter
+        self.helper(word, res, path, count+1, pos+1)
+        # not abbreviate the letter
+        self.helper(word, res, path+(count if count else "")+word[pos], 0, pos+1)
+       
+
+
+  
