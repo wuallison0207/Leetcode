@@ -1,0 +1,57 @@
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        interpret_digit = {
+            "1": " ",
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
+        comb = [""] if digits else []
+        for digit in digits:
+            curr_comb = list()
+            for c in interpret_digit[digit]:
+                for pair in comb:
+                    curr_comb.append(pair + c)
+            comb = curr_comb
+        return comb
+ 
+ ####backtracking method
+ ###Backtracking
+class Solution(object):
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        """
+        interpret_digit = {
+            "1": " ",
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz"
+        }
+        if not digits:
+            return []
+        comb = []
+        self.helper(digits, interpret_digit, "", comb, 0)
+        return comb
+        
+    def helper(self, digits, interpret_digit, path, comb, start):
+        if len(path) == len(digits):
+            return comb.append(path)
+        for i in range(start, len(digits)):
+            for c in interpret_digit[digits[i]]:
+                self.helper(digits, interpret_digit, path+c, comb, i+1)
