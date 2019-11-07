@@ -1,0 +1,12 @@
+res = 0
+        res = self.helper(n, 0, res)
+        return res
+        
+    def helper(self, n, height, res):
+        if height > n:
+            return 0
+        if height == n:
+            res += 1
+            return res
+        
+        return self.helper(n, height+1, res)+self.helper(n, height+2, res)
