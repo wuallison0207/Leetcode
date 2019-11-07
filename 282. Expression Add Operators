@@ -1,0 +1,25 @@
+class Solution(object):
+    def addOperators(self, num, target):
+        """
+        :type num: str
+        :type target: int
+        :rtype: List[str]
+        """
+        res = []
+        
+        self.helper(num, target, res, "", 0, 0, 0)
+        return res
+        
+    def helper(self, num, target, res, path, eva, pos, multed):
+        if pos == len(num) and eva == target:
+                res.append(path)
+                return
+        for i in range(pos, len(num)):
+            if num[pos] == "0" and i > pos: break
+            cur = int(num[pos:i+1])
+            if pos == 0:
+                self.helper(num, target, res, path+str(cur), eva+cur, i+1, eva+cur)
+            else:
+                self.helper(num, target, res, path+"+"+str(cur), eva+cur,i+1, cur)
+                self.helper(num, target, res, path+"-"+str(cur), eva-cur,i+1, -cur)
+                self.helper(num, target, res, path+"*"+str(cur), eva-multed+multed*cur, i+1, multed*cur)
