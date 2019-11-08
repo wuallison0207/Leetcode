@@ -1,0 +1,19 @@
+class Solution(object):
+    def getMoneyAmount(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+       
+        dp = [[0]*(n+1) for _ in range(n+1)]
+        for hi in range(1, n+1):
+            for lo in range(hi-1, 0, -1):
+                globalMin = float('Inf')
+                for k in range(lo, hi):
+                    localMax = k + max(dp[lo][k-1], dp[k+1][hi])
+                    globalMin = min(globalMin, localMax)
+                if lo+1 == hi:
+                    dp[lo][hi] = lo
+                else:
+                    dp[lo][hi] = globalMin
+        return dp[1][n]
