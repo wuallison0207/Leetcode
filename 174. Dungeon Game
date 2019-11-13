@@ -1,0 +1,49 @@
+###bottom up
+class Solution(object):
+    def calculateMinimumHP(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
+        """
+        m, n = len(dungeon), len(dungeon[0])
+        dp = [[1]*n for _ in range(m)]
+        for i in range(m-1, -1, -1):
+            for j in range(n-1, -1, -1):
+                if i == m-1 and j == n-1:
+                    dp[i][j] = max(1, 1-dungeon[i][j])
+                    continue
+                if i == m - 1:
+                    dp[i][j] = max(1, dp[i][j+1] - dungeon[i][j])
+                    continue
+                if j == n - 1:
+                    dp[i][j] = max(1, dp[i+1][j] - dungeon[i][j])
+                    continue
+                dp[i][j] = max(1, min(dp[i][j+1], dp[i+1][j]) - dungeon[i][j])
+        return dp[0][0]
+        
+###top down TIME LIMIT EXCEED!!!
+class Solution(object):
+    def calculateMinimumHP(self, dungeon):
+        """
+        :type dungeon: List[List[int]]
+        :rtype: int
+        """
+        m, n = len(dungeon), len(dungeon[0])
+        memo = [[0]*n for _ in range(m)]
+        memo[m-1][n-1] = max(1, 1-dungeon[-1][-1])
+        return self.helper(0, 0, dungeon, memo)
+        
+        
+    def helper(self, i, j, dungeon, memo):
+        if memo[i][j] != 0: return memo[i][j]
+                    
+        if i == len(dungeon) - 1:
+            ans = self.helper(i, j+1, dungeon, memo) - dungeon[i][j]
+            return max(1, ans)
+                    
+        if j == len(dungeon[0]) - 1:
+            ans = self.helper(i+1, j, dungeon, memo) - dungeon[i][j] 
+            return max(1, ans)
+        
+        ans = min(self.helper(i,j+1, dungeon, memo), self.helper(i+1,j,dungeon,memo)) - dungeon[i][j]
+        return max(1, ans)
