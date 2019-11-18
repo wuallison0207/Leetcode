@@ -1,0 +1,30 @@
+class Solution(object):
+    def maxSumSubmatrix(self, matrix, k):
+        """
+        :type matrix: List[List[int]]
+        :type k: int
+        :rtype: int
+        """
+        if not matrix: return 0
+        m, n = len(matrix), len(matrix[0])
+        res = float('-Inf')
+        for left in range(n):
+            sum_row = [0]*m
+            for right in range(left, n):
+                for r in range(m):
+                    sum_row[r] += matrix[r][right]
+                    
+                #find the local subarray
+                import bisect
+                cum_sum = [0]
+                cum, max_sum = 0, float('-Inf')
+                for item in sum_row:
+                    cum += item
+                    idx = bisect.bisect_left(cum_sum, cum - k)
+                    if idx < len(cum_sum):
+                        max_sum = max(max_sum, cum - cum_sum[idx])
+                    bisect.insort(cum_sum, cum)
+                
+                res = max(res, max_sum)
+        return res
+                
