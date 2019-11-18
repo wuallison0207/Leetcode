@@ -1,0 +1,32 @@
+class Solution(object):
+    def maximalRectangle(self, matrix):
+        """
+        :type matrix: List[List[str]]
+        :rtype: int
+        """
+        if not matrix: return 0
+        m, n = len(matrix), len(matrix[0])
+        
+        left, right, height = [0]*n, [n-1]*n, [0]*n
+        maxArea = 0
+        for i in range(m):
+            lB, rB = 0, n-1
+            for j in range(n-1, -1, -1):
+                if matrix[i][j] == '1':
+                    right[j] = min(right[j], rB)
+                else:
+                    right[j] = n-1
+                    rB = j-1
+                    
+                    
+            for j in range(n):
+                if matrix[i][j] == '1':
+                    height[j] += 1
+                    left[j] = max(left[j], lB)
+                    maxArea = max(maxArea, (right[j]-left[j]+1)*height[j])
+                else:
+                    height[j], left[j] = 0, 0
+                    lB = j+1
+                    
+            
+        return maxArea
