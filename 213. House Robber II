@@ -1,0 +1,23 @@
+class Solution(object):
+    def rob(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n = len(nums)
+        if n == 0: return 0
+        if n == 1: return nums[0]
+        if n == 2: return max(nums[0], nums[1])
+        if n == 3: return max(nums[0], nums[2], nums[1])
+        if n == 4: return max(nums[0]+nums[2], nums[1]+nums[3])
+        
+        return max(self.helper(nums[1:]), nums[0]+self.helper(nums[2:-1]))
+    
+    def helper(self, inum):
+        if len(inum) == 2: return max(inum[0], inum[1])
+        dp = [0]*len(inum)
+        dp[0] = inum[0]
+        dp[1] = max(inum[1], inum[0])
+        for i in range(2, len(inum)):
+            dp[i] = max(dp[i-1], dp[i-2]+inum[i])
+        return dp[-1]
